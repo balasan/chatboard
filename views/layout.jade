@@ -1,7 +1,20 @@
 doctype html
-html
+html(ng-app="myApp")
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+
+    script(src="/socket.io/socket.io.js")
+
+
+    script(type='text/javascript', src="/javascripts/lib/angular/angular.min.js")
+    script(type='text/javascript', src="/javascripts/lib/angular-route/angular-route.min.js")
+    // script(type='text/javascript', src="/javascripts/lib/angular-animate/angular-animate.min.js")
+
+    script(type='text/javascript', src="/javascripts/app/controllers.js")
+    script(type='text/javascript', src="/javascripts/app/directives.js")
+    script(type='text/javascript', src="/javascripts/app/services.js")
+    script(type='text/javascript', src="/javascripts/app/filters.js")
+    script(type='text/javascript', src="/javascripts/app/app.js")
   body
     block content

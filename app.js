@@ -9,7 +9,12 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
+
 var app = express();
+
+var server = http.createServer(app)
+var io = require('socket.io').listen(server, {log: false});
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -31,6 +36,31 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+io.sockets.on('connection', function(socket) {
+
+  var getUsers = function(){
+    var clients = io.sockets.clients();
+    var names = []
+    clients.forEach(function(client) {
+        names.push({name: client.username});
+    }); 
+    return names;
+  }
+  socket.emit('updateUsers', getUsers())
+
+  socket.on('setName', function(name, callback) {
+    socket.username = name;    
+    io.sockets.emit('updateUsers', getUsers());
+  });
+
+
+
+});
+
+
+

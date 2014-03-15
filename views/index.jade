@@ -3,3 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  div.container(ng-controller="usersCtrl")
+    input(ng-Model="user.name")
+    div.user
+      | current user: {{user.name}}
+    div.userList
+      div.user(ng-repeat='user in users')
+        | {{user.name}}
